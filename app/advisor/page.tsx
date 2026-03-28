@@ -2,7 +2,7 @@
 
 export const dynamic = "force-dynamic";
 
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { createClient } from "@/lib/supabase";
@@ -44,9 +44,6 @@ const CATEGORY_COLORS: Record<
 };
 
 export default function AdvisorPage() {
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const supabase = useMemo(() => createClient(), []);
-
   const [items, setItems] = useState<Item[]>([]);
   const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
   const [insights, setInsights] = useState<Record<Category, string>>({} as Record<Category, string>);
@@ -58,6 +55,8 @@ export default function AdvisorPage() {
   const [userId, setUserId] = useState<string | null>(null);
 
   const fetchData = useCallback(async (uid: string) => {
+    // createClient() only called here — inside a callback that only runs client-side
+    const supabase = createClient();
     const [itemsResult, recsResult] = await Promise.all([
       supabase
         .from("items")
@@ -74,19 +73,19 @@ export default function AdvisorPage() {
     setItems(itemsResult.data || []);
     setRecommendations(recsResult.data || []);
     setLoading(false);
-  }, [supabase]);
+  }, []);
 
   useEffect(() => {
+    // useEffect only runs in the browser — safe to call createClient() here
     async function init() {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
+      const supabase = createClient();
+      const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
       setUserId(user.id);
       await fetchData(user.id);
     }
     init();
-  }, [supabase, fetchData]);
+  }, [fetchData]);
 
   const itemsByCategory = ALL_CATEGORIES.reduce(
     (acc, cat) => {
@@ -123,7 +122,7 @@ export default function AdvisorPage() {
       }
 
       if (data.recommendations?.length && userId) {
-        // Save to DB
+        const supabase = createClient();
         const toInsert = data.recommendations.map(
           (rec: Omit<Recommendation, "id" | "user_id" | "created_at" | "dismissed" | "saved">) => ({
             ...rec,
@@ -144,18 +143,14 @@ export default function AdvisorPage() {
   }
 
   async function dismissRecommendation(id: string) {
-    await supabase
-      .from("recommendations")
-      .update({ dismissed: true })
-      .eq("id", id);
+    const supabase = createClient();
+    await supabase.from("recommendations").update({ dismissed: true }).eq("id", id);
     setRecommendations((prev) => prev.filter((r) => r.id !== id));
   }
 
   async function saveRecommendation(id: string) {
-    await supabase
-      .from("recommendations")
-      .update({ saved: true })
-      .eq("id", id);
+    const supabase = createClient();
+    await supabase.from("recommendations").update({ saved: true }).eq("id", id);
     setRecommendations((prev) =>
       prev.map((r) => (r.id === id ? { ...r, saved: true } : r))
     );
