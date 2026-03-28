@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { createServerSupabaseClient } from "@/lib/supabase-server";
 import type { Item, Category, Recommendation } from "@/lib/types";
-import { CATEGORY_LABELS, CATEGORY_ICONS, CATEGORY_DESCRIPTIONS } from "@/lib/types";
+import { CATEGORY_LABELS, CATEGORY_ICONS } from "@/lib/types";
 import Navigation from "@/components/Navigation";
 import ItemCard from "@/components/ItemCard";
 import AdvisoryCard from "@/components/AdvisoryCard";

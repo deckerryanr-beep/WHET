@@ -6,12 +6,6 @@ import { usePathname, useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase";
 import type { User } from "@supabase/supabase-js";
 
-const NAV_LINKS = [
-  { href: "/dashboard", label: "Dashboard" },
-  { href: "/advisor", label: "Advisor" },
-  { href: "/log/wine", label: "Log Wine" },
-  { href: "/log/whiskey", label: "Log Whiskey" },
-];
 
 export default function Navigation({ user }: { user?: User | null }) {
   const pathname = usePathname();

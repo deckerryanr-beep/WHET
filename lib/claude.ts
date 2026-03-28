@@ -3,7 +3,6 @@ import type {
   Item,
   Category,
   AdvisorRecommendation,
-  CATEGORY_LABELS,
 } from "./types";
 
 const client = new Anthropic({
