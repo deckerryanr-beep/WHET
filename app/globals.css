@@ -1,0 +1,191 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #0C0C0F;
+  color: #F0EDE6;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@layer base {
+  h1, h2, h3 {
+    font-family: var(--font-serif);
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #13131A;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #2A2A3A;
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #C9A864;
+  }
+}
+
+@layer components {
+  .btn-gold {
+    @apply bg-gold text-background font-semibold px-6 py-3 rounded-sm
+           transition-all duration-200 hover:bg-gold-light active:bg-gold-dark
+           tracking-wide text-sm uppercase;
+  }
+
+  .btn-outline {
+    @apply border border-gold text-gold font-semibold px-6 py-3 rounded-sm
+           transition-all duration-200 hover:bg-gold hover:text-background
+           tracking-wide text-sm uppercase;
+  }
+
+  .btn-ghost {
+    @apply text-text-secondary font-medium px-4 py-2 rounded-sm
+           transition-all duration-200 hover:text-text-primary hover:bg-surface-2
+           text-sm;
+  }
+
+  .card {
+    @apply bg-surface border border-border rounded-sm p-6
+           transition-all duration-200;
+  }
+
+  .card-hover {
+    @apply card hover:border-border-light hover:bg-surface-2;
+  }
+
+  .input-field {
+    @apply w-full bg-surface-2 border border-border rounded-sm px-4 py-3
+           text-text-primary placeholder-text-muted
+           focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold
+           transition-colors duration-200 text-sm;
+  }
+
+  .label {
+    @apply block text-text-secondary text-xs uppercase tracking-widest mb-2;
+  }
+
+  .section-title {
+    @apply font-serif text-3xl text-text-primary;
+  }
+
+  .gold-text {
+    @apply text-gold;
+  }
+
+  .divider {
+    @apply border-t border-border my-6;
+  }
+
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-sm text-xs
+           font-medium uppercase tracking-wider;
+  }
+
+  .badge-gold {
+    @apply badge bg-gold/10 text-gold border border-gold/20;
+  }
+
+  .badge-wine {
+    @apply badge bg-wine/10 text-red-400 border border-wine/20;
+  }
+
+  .badge-whiskey {
+    @apply badge bg-whiskey/10 text-amber-400 border border-whiskey/20;
+  }
+
+  .badge-athletic {
+    @apply badge bg-athletic/10 text-emerald-400 border border-athletic/20;
+  }
+
+  .badge-fashion {
+    @apply badge bg-fashion/10 text-purple-400 border border-fashion/20;
+  }
+
+  .rating-dot {
+    @apply w-2 h-2 rounded-full bg-gold inline-block;
+  }
+}
+
+/* Gold shimmer effect for hero */
+.gold-shimmer {
+  background: linear-gradient(
+    135deg,
+    #C9A864 0%,
+    #DFC48A 30%,
+    #C9A864 50%,
+    #A08040 70%,
+    #C9A864 100%
+  );
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 4s ease infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Noise texture overlay */
+.noise-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+/* Category color accents */
+.category-wine { --accent: theme('colors.wine'); }
+.category-whiskey { --accent: theme('colors.whiskey'); }
+.category-athletic_wear { --accent: theme('colors.athletic'); }
+.category-going_out_wear { --accent: theme('colors.fashion'); }
+
+/* Star/dot rating display */
+.rating-bar {
+  display: flex;
+  gap: 2px;
+}
+
+.rating-bar-fill {
+  height: 3px;
+  background: #C9A864;
+  border-radius: 2px;
+  flex: 1;
+}
+
+.rating-bar-empty {
+  height: 3px;
+  background: #2A2A3A;
+  border-radius: 2px;
+  flex: 1;
+}
