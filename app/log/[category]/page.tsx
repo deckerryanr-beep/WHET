@@ -552,8 +552,6 @@ export default function LogPage({ params }: { params: Promise<PageParams> }) {
   const label = CATEGORY_LABELS[category];
   const icon = CATEGORY_ICONS[category];
 
-  const supabase = createClient();
-
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!name.trim()) {
@@ -563,6 +561,7 @@ export default function LogPage({ params }: { params: Promise<PageParams> }) {
     setSaving(true);
     setError("");
 
+    const supabase = createClient();
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) { router.push("/login"); return; }
 

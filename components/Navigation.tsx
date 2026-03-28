@@ -11,9 +11,9 @@ export default function Navigation({ user }: { user?: User | null }) {
   const pathname = usePathname();
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
-  const supabase = createClient();
 
   async function handleSignOut() {
+    const supabase = createClient();
     await supabase.auth.signOut();
     router.push("/");
     router.refresh();

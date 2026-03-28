@@ -15,13 +15,12 @@ function LoginForm() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const supabase = createClient();
-
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
     setError("");
     setLoading(true);
 
+    const supabase = createClient();
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,

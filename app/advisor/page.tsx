@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { createClient } from "@/lib/supabase";
@@ -42,7 +42,8 @@ const CATEGORY_COLORS: Record<
 };
 
 export default function AdvisorPage() {
-  const supabase = createClient();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const supabase = useMemo(() => createClient(), []);
 
   const [items, setItems] = useState<Item[]>([]);
   const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
