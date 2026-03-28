@@ -104,6 +104,12 @@ export default function LandingPage() {
               I Already Have an Account
             </Link>
           </div>
+          <p className="text-text-muted text-xs mt-6">
+            Setting this up?{" "}
+            <Link href="/setup" className="text-gold hover:text-gold-light transition-colors underline underline-offset-2">
+              See the 3-step deployment guide →
+            </Link>
+          </p>
         </div>
       </section>
 
